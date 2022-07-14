@@ -4,6 +4,8 @@
 #include <Wire.h>
 #include <VL6180X.h>
 
+#include "comm.h"
+
 // Variables globale
 VL6180X sensorL;
 VL6180X sensorR;
@@ -11,6 +13,7 @@ int i1;
 int i2;
 Servo motDroit;
 Servo motGauche;
+
 void avancer(int valdroite, int valgauche)
 {
   motDroit.writeMicroseconds(NEUTRE_DROIT - 100 * valdroite);
@@ -53,6 +56,19 @@ void avancer(int valdroite, int valgauche)
     digitalWrite(LED_FRONT_LEFT, LOW);
   }
 }
+
+
+void mvt_handler(comm::Movement mvt) { 
+  switch(mvt) {
+    case comm::Movement::FORWARD:
+        avancer(1, 1);
+    case comm::Movement::STOP:
+        avancer(0, 0);
+    case comm::Movement::UNKNOWN: 
+        avancer(0, 0);
+  }
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -64,6 +80,7 @@ void setup()
   pinMode(SWITCH_2, INPUT_PULLUP);
   motDroit.attach(SERVO_RIGHT);
   motGauche.attach(SERVO_LEFT);
+  //comm::movement_handler = mvt_handler;
   // pinMode(TOF_EN_LEFT, OUTPUT);
   // pinMode(TOF_EN_RIGHT, OUTPUT);
   // digitalWrite(TOF_EN_LEFT, LOW);
