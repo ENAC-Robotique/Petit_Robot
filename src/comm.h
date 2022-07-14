@@ -16,13 +16,13 @@ namespace comm {
 
     // ----- Settings ---------------------
     //Existing SSID
-    const char* ssid = "robot";
-    const char* password = "robotcities";
+    extern const char* ssid;
+    extern const char* password;
     //Generate access point
-    const char* access_pt = "potit_robot";
-    const char* password_access_pt = "ageofbots";
+    extern const char* access_pt;
+    extern const char* password_access_pt;
 
-    void (*movement_handler)(Movement); //A affecter autre part
+    extern void (*movement_handler)(Movement); //A affecter autre part
     // --- Setup -----------------
     //wifi
     void init_comm();
@@ -30,8 +30,8 @@ namespace comm {
     void init_access_pt();
 
     //Async websocket Connection
-    AsyncWebServer server(HTTP_PORT);
-    AsyncWebSocket ws("/ws");
+    extern AsyncWebServer server;
+    extern AsyncWebSocket ws;
     void initWebSocket();
     void onEvent(AsyncWebSocket       *server,  //
              AsyncWebSocketClient *client,  //

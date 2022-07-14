@@ -10,6 +10,16 @@
 //Source : https://m1cr0lab-esp32.github.io/remote-control-with-websocket/wifi-setup/
 
 namespace comm {
+//Settings : 
+const char* ssid = "robot";
+const char* password = "robotcities";
+//Generate access point
+const char* access_pt = "potit_robot";
+const char* password_access_pt = "ageofbots";
+
+AsyncWebServer server(HTTP_PORT);
+AsyncWebSocket ws("/ws");
+
 // --- Setup -----------------
 // First, it tries to connect twice during 3 seconds to the existing SSID from settings
 // Then, if it doesn't find it, it creates an access point
@@ -70,15 +80,32 @@ void onEvent(AsyncWebSocket       *server,  //
     }
 
     void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-        if (strcmp((char*)data, "forward"))
+        Serial.printf("handling websocket with data : %s", (char*)data);
+        if (strcmp((char*)data, "forward") == 0)
         {
             movement_handler(Movement::FORWARD);
             
         }
-        if (strcmp((char*)data, "stop"))
+        if (strcmp((char*)data, "left") == 0)
+        {
+            movement_handler(Movement::LEFT);
+            
+        }
+        if (strcmp((char*)data, "right") == 0)
+        {
+            movement_handler(Movement::RIGHT);
+            
+        }
+        if (strcmp((char*)data, "backward") == 0)
+        {
+            movement_handler(Movement::BACKWARD);
+            
+        }
+        if (strcmp((char*)data, "stop") == 0)
         {
             movement_handler(Movement::STOP);
         }
+        Serial.println("unvalid WS message received ");
         movement_handler(Movement::UNKNOWN);
     }
 }

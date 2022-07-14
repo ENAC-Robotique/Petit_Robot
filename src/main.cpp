@@ -62,6 +62,12 @@ void mvt_handler(comm::Movement mvt) {
   switch(mvt) {
     case comm::Movement::FORWARD:
         avancer(1, 1);
+    case comm::Movement::LEFT:
+      avancer(-1, 1);
+    case comm::Movement::RIGHT:
+      avancer(1, -1);
+    case comm::Movement::BACKWARD:
+      avancer(-1, -1);
     case comm::Movement::STOP:
         avancer(0, 0);
     case comm::Movement::UNKNOWN: 
