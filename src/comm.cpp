@@ -28,6 +28,7 @@ void init_comm() {
         init_access_pt();
     }
     //Generate access point
+    initWebSocket();
 }
 
 bool init_connect_wifi() { 
@@ -54,6 +55,8 @@ void init_access_pt() {
 void initWebSocket() {
     ws.onEvent(onEvent);
     server.addHandler(&ws);
+    server.begin();
+    Serial.println("init websocket");
     
 }
 
@@ -80,32 +83,36 @@ void onEvent(AsyncWebSocket       *server,  //
     }
 
     void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-        Serial.printf("handling websocket with data : %s", (char*)data);
-        if (strcmp((char*)data, "forward") == 0)
+        Serial.printf("handling websocket with data : %s |", (char*)data);
+        Serial.printf("%d", (char) len);
+        if (data[0] == 'f')
         {
             movement_handler(Movement::FORWARD);
             
         }
-        if (strcmp((char*)data, "left") == 0)
+        else if (data[0] == 'l')
         {
             movement_handler(Movement::LEFT);
             
         }
-        if (strcmp((char*)data, "right") == 0)
+        else if (data[0] == 'r')
         {
             movement_handler(Movement::RIGHT);
             
         }
-        if (strcmp((char*)data, "backward") == 0)
+        else if (data[0] == 'b')
         {
             movement_handler(Movement::BACKWARD);
             
         }
-        if (strcmp((char*)data, "stop") == 0)
+        else if (data[0] == 's')
         {
             movement_handler(Movement::STOP);
         }
-        Serial.println("unvalid WS message received ");
-        movement_handler(Movement::UNKNOWN);
+        else {
+            Serial.println("unvalid WS message received ");
+            movement_handler(Movement::UNKNOWN);
+        }
+
     }
 }

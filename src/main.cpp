@@ -57,21 +57,34 @@ void avancer(int valdroite, int valgauche)
   }
 }
 
-
-void mvt_handler(comm::Movement mvt) { 
+void comm::movement_handler(comm::Movement mvt) {
+  Serial.println("movement handler triggered");
+  Serial.printf("a  %d  b", (int) mvt);
   switch(mvt) {
-    case comm::Movement::FORWARD:
-        avancer(1, 1);
-    case comm::Movement::LEFT:
-      avancer(-1, 1);
-    case comm::Movement::RIGHT:
-      avancer(1, -1);
-    case comm::Movement::BACKWARD:
-      avancer(-1, -1);
-    case comm::Movement::STOP:
-        avancer(0, 0);
-    case comm::Movement::UNKNOWN: 
-        avancer(0, 0);
+  case comm::Movement::FORWARD:
+      Serial.println("forward");
+      avancer(1, 1);
+      break;
+  case comm::Movement::LEFT:
+  Serial.println("left");
+    avancer(-1, 1);
+    break;
+  case comm::Movement::RIGHT:
+  Serial.println("right");
+    avancer(1, -1);
+    break;
+  case comm::Movement::BACKWARD:
+  Serial.println("backward");
+    avancer(-1, -1);
+  break;
+  case comm::Movement::STOP:
+  Serial.println("stop");
+      avancer(0, 0);
+            break;
+  case comm::Movement::UNKNOWN: 
+  Serial.println("unk,ow");
+      avancer(0, 0);
+            break;
   }
 }
 
@@ -86,7 +99,9 @@ void setup()
   pinMode(SWITCH_2, INPUT_PULLUP);
   motDroit.attach(SERVO_RIGHT);
   motGauche.attach(SERVO_LEFT);
-  //comm::movement_handler = mvt_handler;
+    //= mvt_handler;
+  comm::init_comm();
+  Serial.println("setup + network finished !");
   // pinMode(TOF_EN_LEFT, OUTPUT);
   // pinMode(TOF_EN_RIGHT, OUTPUT);
   // digitalWrite(TOF_EN_LEFT, LOW);
@@ -108,7 +123,6 @@ void setup()
   // sensorR.setAddress(0x30);
   // sensorR.stopContinuous();
 }
-int c = 0;
 void loop()
 {
   // int distanceR = sensorR.readRangeSingleMillimeters();
@@ -130,6 +144,7 @@ void loop()
   //   avancer(-1, 0);
   // }
   // delay(200);
+  /*
   c++;
   Serial.printf("%d\t", c);
   if (c % 3)
@@ -150,4 +165,5 @@ void loop()
     delay(500);
     Serial.println("Stop !");
   }
+  */
 }

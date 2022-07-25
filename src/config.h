@@ -13,7 +13,7 @@ const int SERVO_LEFT = 14;
 const int SERVO_RIGHT = 12;
 
 const int NEUTRE_DROIT = 1490;
-const int NEUTRE_GAUCHE = 1480;
+const int NEUTRE_GAUCHE = 1477;
 
 const int TOF_EN_LEFT = 18;
 const int TOF_EN_RIGHT = 19;

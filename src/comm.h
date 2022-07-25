@@ -3,6 +3,7 @@
 #include "SPIFFS.h" //!! Keep it included !! workaround or else ESPwebsocket compilation throw an error and can't find FS.h
 #include "ESPAsyncWebServer.h" 
 
+//To use this file, implement movement_handler somewhere and use "init_comm()" on the setup(), and modify ssid, password, access_pt,... if needed
 #define HTTP_PORT 80
 namespace comm { 
     enum Movement {
@@ -22,10 +23,11 @@ namespace comm {
     extern const char* access_pt;
     extern const char* password_access_pt;
 
-    extern void (*movement_handler)(Movement); //A affecter autre part
+    void movement_handler(Movement mvt); //Fonction à affecter autre part //Return type different from void only to avoid errors
     // --- Setup -----------------
+    void init_comm(); //USE IT ON THE MAIN to start network functionalities
+
     //wifi
-    void init_comm();
     bool init_connect_wifi();
     void init_access_pt();
 
