@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+    
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=300, initial-scale=1">
+    <!-- import css -->
+    <link rel="stylesheet" href="picniss.css">
+    <link rel="stylesheet" href="custom.css">
+    <script src="connexion.js"></script>
+    <title>Remote control for enac robot 2022</title>
+</head>
+
+<div>
+    <div id="navbar"></div>
+    <div id="ctrl" class="inner">
+
+
+        <div id="status" class="inner">
+            <table>
+                <tr>
+                    <td id="connexion_status">Déconnecté</td>
+                    <!-- Connexion proxy/Direct-->
+                </tr>
+                <tr>
+                    <!--<td>Nb avec la commande/Nb connectés</td>-->
+                    <td id="cmd_status">En attente de commande</td> <!-- AVANCER 10/15 -->
+                </tr>
+            </table>
+        </div>
+        <div id="buttons" class="inner">
+            <div class="inner">
+                <button onclick="forward()">↑</button>
+            </div>
+            
+            <br>
+            <div class="inner">
+                <button onclick="left()">←</button>
+                <button class="error margined" onclick="stop()">STOP</button>
+                <button onclick="right()">→</button>
+            </div>
+            <br>
+            <div class="inner">
+                <button onclick="backward()">↓</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <br>
+        <br>
+    </div>
+    <footer>
+        <div>
+            <img class="hor_center" src="logo-robotique.jpg" alt="Logo du club robotique de l'ENAC" style="width: 200px">
+        </div>
+    </footer>
+</div>

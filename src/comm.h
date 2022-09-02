@@ -43,5 +43,7 @@ namespace comm {
              size_t                len);
     void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
 
+    //http server
+    void initHttpServer();
 
 }

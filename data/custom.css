@@ -1,0 +1,24 @@
+div { 
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.inner {
+    display: table;
+    margin: 0 auto;
+    background-color: #eeeeee;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+.margined { 
+    margin-left: 20px;
+    margin-right:20px;
+}
+
+.hor_center { 
+    display: table;
+    margin: 0 auto;
+    padding: 10px;
+}

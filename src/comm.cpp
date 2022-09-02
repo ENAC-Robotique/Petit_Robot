@@ -29,9 +29,41 @@ void init_comm() {
     }
     //Generate access point
     initWebSocket();
+    //Add website
+    initHttpServer();
+
 }
 
+void initHttpServer() {
+    //https://randomnerdtutorials.com/esp32-vs-code-platformio-spiffs/
+    //Adding website : 
+    if(!SPIFFS.begin(true)){
+        Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+    }
+
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/index.html", String(), false);
+  });
+
+      server.on("/custom.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/custom.css", "text/css", false);
+  });
+
+    server.on("/picniss.css", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/picniss.css", "text/css", false);
+  });
+
+    server.on("/connexion.js", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/connexion.js", "text/javascript", false);
+  });
+
+    server.on("/logo-robotique.jpg", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/logo-robotique.jpg", "image/jpg", false);
+  });
+}
 bool init_connect_wifi() { 
+    /*
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     Serial.printf("Trying to connect [%s] ", WiFi.macAddress().c_str());
@@ -45,11 +77,19 @@ bool init_connect_wifi() {
         return false;
     }
     Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
+    */
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(access_pt, password_access_pt);
+    Serial.println(WiFi.softAPIP());
+    Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
     return true;
 }
 
 void init_access_pt() { 
-
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(access_pt, password_access_pt);
+    Serial.println(WiFi.softAPIP());
+    Serial.printf(" %s\n", WiFi.localIP().toString().c_str());
 }
 
 void initWebSocket() {
